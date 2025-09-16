@@ -29,7 +29,6 @@ class TwoPhaseCommitApplicationTests {
     @Autowired
     private FirstService firstService;   // A DB
     @Autowired
-
     private SecondService secondService;  // B DB
 
     @Autowired
