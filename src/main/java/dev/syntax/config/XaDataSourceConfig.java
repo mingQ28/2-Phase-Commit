@@ -23,7 +23,7 @@ public class XaDataSourceConfig {
     @Bean(name = "atomikosUserTransactionManager")
     public UserTransactionManager userTransactionManager() throws SystemException {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
-        userTransactionManager.setTransactionTimeout(1000);
+        userTransactionManager.setTransactionTimeout(30);
         userTransactionManager.setForceShutdown(true);
 
         return userTransactionManager;
@@ -32,7 +32,7 @@ public class XaDataSourceConfig {
     @Bean(name = "atomikosUserTransaction")
     public UserTransaction userTransaction() throws SystemException {
         UserTransaction userTransaction = new UserTransactionImp();
-        userTransaction.setTransactionTimeout(60000);
+        userTransaction.setTransactionTimeout(30);
 
         return userTransaction;
     }

@@ -71,7 +71,6 @@ class TwoPhaseCommitApplicationTests {
 
 
         try {
-//            transferService.transfer("1001", "3001", amount, true);
             transferService.transfer("1001", "3001", amount);
         } catch (RuntimeException e) {
             System.out.println("[Test] 예외 발생: " + e.getMessage());
