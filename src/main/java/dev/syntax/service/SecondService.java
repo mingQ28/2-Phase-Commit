@@ -19,6 +19,7 @@ public class SecondService {
         return secondRepository.findByAccountNumber(accountNumber);
     }
 
+    // 입금 서비스 관련 서비스 로직 - seconddb와 연동
     public void deposit(String toAccountNumber, BigDecimal amount) {
         var account = secondRepository.findByAccountNumber(toAccountNumber);
 

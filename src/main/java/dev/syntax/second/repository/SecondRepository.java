@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SecondRepository extends JpaRepository<Account, Long> {
+    // 쿼리메서드
+    // 계좌번호에 맞는 계좌정보 찾기
     Account findByAccountNumber(String toAccountNumber);
 }

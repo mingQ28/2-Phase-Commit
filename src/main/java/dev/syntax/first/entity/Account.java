@@ -17,7 +17,7 @@ public class Account {
     private Long id;
 
     @Column(name = "account_number")
-    private String accountNumber;
+    private String accountNumber; // 계좌번호
 
     private BigDecimal balance;
 

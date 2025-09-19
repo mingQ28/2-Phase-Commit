@@ -15,11 +15,14 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
+// atomikos 기반 jta 트랜잭션 매니저 설정 클래스
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement // @Trasactional 어노테이션 기반 트랜잭션 활성화
 public class XaDataSourceConfig {
+    // 트랜잭션 매니저 빈 이름
     public static final String TRANSACTION_MANAGER_BEAN_NAME = "jtaTransactionManager";
 
+    // 분산 트랜잭션을 실제로 관리하는 매니저 객체
     @Bean(name = "atomikosUserTransactionManager")
     public UserTransactionManager userTransactionManager() throws SystemException {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
@@ -29,6 +32,7 @@ public class XaDataSourceConfig {
         return userTransactionManager;
     }
 
+    // 트랜잭션 경계를 관리
     @Bean(name = "atomikosUserTransaction")
     public UserTransaction userTransaction() throws SystemException {
         UserTransaction userTransaction = new UserTransactionImp();
@@ -37,6 +41,7 @@ public class XaDataSourceConfig {
         return userTransaction;
     }
 
+    // spring이 사용할 jta 트랜잭션 매니저 bean 등록
     @Primary
     @Bean(name = TRANSACTION_MANAGER_BEAN_NAME)
     public JtaTransactionManager jtaTransactionManager(

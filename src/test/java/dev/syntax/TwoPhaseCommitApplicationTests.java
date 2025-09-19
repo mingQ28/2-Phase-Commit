@@ -59,6 +59,31 @@ class TwoPhaseCommitApplicationTests {
 
 
     @Test
+    @DisplayName("2PC 커밋 테스트 - 출력 확인")
+    void testTwoPhaseCommitWithPrint() {
+        BigDecimal amount = BigDecimal.valueOf(100);
+
+        var fromAccountB = firstService.findByAccountNumber("1001");
+        var toAccountB = secondService.findByAccountNumber("2001");
+
+        System.out.println("[Test] 커밋 전 출금 계좌 잔액: " + fromAccountB.getBalance());
+        System.out.println("[Test] 커밋 전 입금 계좌 잔액: " + toAccountB.getBalance());
+
+
+        try {
+            transferService.transfer("1001", "2001", amount);
+        } catch (RuntimeException e) {
+            System.out.println("[Test] 예외 발생: " + e.getMessage());
+        }
+
+        // 커밋 후 계좌 잔액 확인
+        var fromAccountA = firstService.findByAccountNumber("1001");
+        var toAccountA = secondService.findByAccountNumber("2001");
+
+        System.out.println("[Test] 커밋 후 출금 계좌 잔액: " + fromAccountA.getBalance());
+        System.out.println("[Test] 커밋 후 입금 계좌 잔액: " + toAccountA.getBalance());
+    }
+    @Test
     @DisplayName("2PC 롤백 테스트 - 출력 확인")
     void testTwoPhaseRollbackWithPrint() {
         BigDecimal amount = BigDecimal.valueOf(100);
@@ -71,6 +96,10 @@ class TwoPhaseCommitApplicationTests {
 
 
         try {
+            // 유효하지 않은 계좌번호 전달
+            // 서비스 로직에서 오류가 발생했기 때문에
+            // prepare 단계 전에 오류가 발생해서
+            // 로그에 prepare 전에 end가 출력됨
             transferService.transfer("1001", "3001", amount);
         } catch (RuntimeException e) {
             System.out.println("[Test] 예외 발생: " + e.getMessage());

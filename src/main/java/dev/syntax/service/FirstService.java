@@ -19,6 +19,7 @@ public class FirstService {
         return firstRepository.findByAccountNumber(accountNumber);
     }
 
+    // 출금서비스 관련 서비스 로직 - firstdb와 연동
     public void withdraw(String fromAccountNumber, BigDecimal amount) {
         var account = firstRepository.findByAccountNumber(fromAccountNumber);
 

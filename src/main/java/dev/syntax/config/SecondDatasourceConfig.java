@@ -13,30 +13,34 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 
+// seconddb 데이터베이스
 @Configuration
 @EnableConfigurationProperties(DatabaseConfig.class)
 @EnableJpaRepositories(
-        basePackages = "dev.syntax.second.repository",
+        basePackages = "dev.syntax.second.repository", // db 레포 위치
         entityManagerFactoryRef = SecondDatasourceConfig.ENTITY_MANAGER_BEAN_NAME,
+        // 사용할 entityManagerFactory bean 이름
         transactionManagerRef = XaDataSourceConfig.TRANSACTION_MANAGER_BEAN_NAME
+        // transactionManager bean 이름(atomikos)
 )
 public class SecondDatasourceConfig {
 
-    public static final String ENTITY_MANAGER_BEAN_NAME = "secondEntityManager";
+    public static final String ENTITY_MANAGER_BEAN_NAME = "secondEntityManger";
     private static final String DATASOURCE_BEAN_NAME = "secondDataSource";
     private static final String DATASOURCE_PROPERTIES_PREFIX = "spring.datasource.seconddb";
     private static final String HIBERNATE_PROPERTIES = "secondHibernateProperties";
 
+    @Primary
     @Bean(name = ENTITY_MANAGER_BEAN_NAME)
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            @Qualifier(DATASOURCE_BEAN_NAME) DataSource dataSource,
-            @Qualifier(HIBERNATE_PROPERTIES) DatabaseConfig.Hibernate hibernateProperties
+            @Qualifier(DATASOURCE_BEAN_NAME) DataSource dataSource, // datasource 주입
+            @Qualifier(HIBERNATE_PROPERTIES) DatabaseConfig.Hibernate hibernateProperties // hibernate 주입
     ) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
-        em.setPackagesToScan("dev.syntax.second.entity");
-        em.setJpaPropertyMap(DatabaseConfig.Hibernate.propertiesToMap(hibernateProperties));
-        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        em.setDataSource(dataSource); // datasource 지정
+        em.setPackagesToScan("dev.syntax.second.entity"); // 엔티티 패키지 스캔 경로 지정
+        em.setJpaPropertyMap(DatabaseConfig.Hibernate.propertiesToMap(hibernateProperties)); // hibernate/jpa 설정 적용
+        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter()); // hibernate vendoradapter 지정
         return em;
     }
 
@@ -46,10 +50,10 @@ public class SecondDatasourceConfig {
         return new DatabaseConfig.Hibernate();
     }
 
-
+    @Primary
     @Bean(name = DATASOURCE_BEAN_NAME)
     @ConfigurationProperties(prefix = DATASOURCE_PROPERTIES_PREFIX)
     public DataSource dataSource() {
-        return new AtomikosDataSourceBean();
+        return new AtomikosDataSourceBean(); // xa 트랜잭션을 지원하는 atomikos datasource
     }
 }
