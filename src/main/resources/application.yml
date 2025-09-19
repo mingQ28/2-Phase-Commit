@@ -2,7 +2,7 @@ spring:
   datasource:
     firstdb:
       xa-properties:
-        URL: jdbc:mysql://127.0.0.1:3306/firstdb
+        URL: jdbc:mysql://localhost:3306/firstdb
         user: root
         password: 1234
       xa-data-source-class-name: com.mysql.cj.jdbc.MysqlXADataSource
@@ -18,7 +18,7 @@ spring:
 
     seconddb:
       xa-properties:
-        URL: jdbc:mysql://127.0.0.1:3306/seconddb
+        URL: jdbc:mysql://localhost:3306/seconddb
         user: root
         password: 1234
       xa-data-source-class-name: com.mysql.cj.jdbc.MysqlXADataSource
