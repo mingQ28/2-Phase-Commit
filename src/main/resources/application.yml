@@ -10,7 +10,7 @@ spring:
       min-pool-size: 5
       max-pool-size: 10
       hibernate:
-        ddl-auto: update
+        ddl-auto: create
         dialect: org.hibernate.dialect.MySQL8Dialect
         naming:
           implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
@@ -26,7 +26,7 @@ spring:
       min-pool-size: 5
       max-pool-size: 10
       hibernate:
-        ddl-auto: update
+        ddl-auto: create
         dialect: org.hibernate.dialect.MySQL8Dialect
         naming:
           implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
